@@ -32,7 +32,7 @@ Here's a walkthrough of implemented user stories:
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
-![](screen_rec_gif.gif)
+![](screen_rec_gif)
 
 ## Notes
 
