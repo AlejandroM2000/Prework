@@ -10,22 +10,46 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var billAmountTextField: UITextField!
-    @IBOutlet weak var tipControl: UISegmentedControl!
     @IBOutlet weak var tipAmountLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
     
+    @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var stepperLabel: UILabel!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    
+    @IBOutlet weak var stepper: UIStepper!
+    @IBOutlet weak var sliderLabel: UILabel!
+    
+
+    @IBAction func stepperValueChanged(_ sender: UIStepper) {
+        let currValue = Int(sender.value)
+        stepperLabel.text = "\(currValue)"
+        //stepperLabel.text = Int(sender.value).description
+     }
+    
+    @IBAction func sliderValueChanged(_ sender: UISlider) {
+        let currentValue = Int(sender.value)
+        sliderLabel.text = "\(currentValue)" + "%"
     }
 
-
-    @IBAction func calculateTip(_ sender: Any) {        let bill = Double(billAmountTextField.text!) ?? 0
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.billAmountTextField.becomeFirstResponder()
+        stepper.wraps = true
+        stepper.autorepeat = true
+        stepper.maximumValue = 10
         
-        let tipPercentages = [0.15,0.18,0.2]
-        let tip  = bill * tipPercentages[tipControl.selectedSegmentIndex]
-        let total = bill + tip
+        // Do any additional setup after loading the view.
+    }
+    
+
+
+    @IBAction func calculateTip(_ sender: Any) {
+        let bill = Double(billAmountTextField.text!) ?? 0
+        let tipPercentage = Double(slider.value)/100.0
+        let tip  = bill * tipPercentage
+        let stepperVal = Double(stepperLabel.text!) ?? 0.0
+       let total = (bill + tip)/stepperVal
         tipAmountLabel.text = String(format: "$%.2f", tip)
         totalLabel.text = String(format: "$%.2f", total)
     }
